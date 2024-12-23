@@ -3,12 +3,14 @@ import { FaExpandArrowsAlt} from "react-icons/fa";
 import { FaLocationCrosshairs } from "react-icons/fa6"
 import axios from "axios";
 import CardSkeleton from "../Skeleton/LoadingSkeleton";
+import {Link} from "react-router-dom"
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const Marathons = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["/marathons"],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3000/marathons`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/marathons`);
       return res.data;
     },
   });
@@ -26,9 +28,16 @@ const Marathons = () => {
   if (isError) {
     return (
       <p className="my-12 text-center text-3xl font-bold text-red-500">
-        {error}
+        {error.message || 'An unknown error occurred'}
       </p>
     );
+  }
+
+  const calculateTimeLeft =(duration)=>{
+    const endDate = new Date(duration).getTime()
+    const currentDate = Date.now()
+    const result = Math.max((endDate - currentDate)/1000,0)
+    return result
   }
 
   return (
@@ -45,7 +54,7 @@ const Marathons = () => {
         {data?.map((marathon) => (
           <div 
           key={marathon._id }
-          className="card bg-base-100 max-w-[400px] max-h-[300px] image-full shadow-xl">
+          className="card bg-base-100 max-w-[400px] max-h-[400px] image-full shadow-xl">
             <figure>
               <img
               className="w-full object-cover object-center"
@@ -58,9 +67,38 @@ const Marathons = () => {
               <p className="text-white  font-medium">{marathon.description.slice(0,80)}...</p>
               <p className="text-white text-base font-medium flex items-center gap-1">
                 <FaLocationCrosshairs/> Location : {marathon.location}</p>
-              <p className="text-white text-base font-medium">Deadline : {marathon.registrationEnd}</p>
-              <div className="card-actions justify-end">
-                <button className="btn bg-highlight text-white hover:text-highlight border-none">See Details</button>
+              <div className="card-actions justify-between items-center mt-3">
+              <CountdownCircleTimer
+                isPlaying
+                duration={calculateTimeLeft(marathon?.registrationEnd)}
+                size={100}
+                colors={["#004777", "#F7B801", "#A30000"]}
+                colorsTime={[10, 5, 0]} // Change color thresholds
+                onComplete={() => ({ shouldRepeat: false })}
+                >
+                  {({remaining})=>{
+                    
+                    if(remaining > 0){
+                      const days = Math.floor(remaining /(3600 * 24))
+                      const hours = Math.floor((remaining % (3600*24)) / 3600)
+                      const minutes = Math.floor((remaining % 3600) / 60) 
+                      const seconds = Math.floor(remaining % 60)
+
+                      return (
+                        <div className="text-center text-xs text-white font-bold">
+                          {days > 0 && `${days}d `}
+                          {hours > 0 && `${hours}h `}
+                          {minutes > 0 && `${minutes}m `}
+                          {seconds}s
+                        </div>
+                      );
+                     }
+                     return <div className="text-center text-xs text-pinkShade font-bold">Expired</div>;
+                  }}
+                </CountdownCircleTimer>
+                <Link 
+                to={`/details/${marathon._id}`}
+                className="btn bg-highlight text-white hover:text-highlight border-none">See Details</Link>
               </div>
             </div>
           </div>

@@ -61,7 +61,10 @@ const Registration = () => {
         navigate('/')
       }
     })
-    .catch(err=>console.log(err))
+    .catch(err=>{
+      const errorMEssage = err.message.split('/')[1].split(')')[0]
+      setError( errorMEssage||err.message || err.code)
+    })
   };
 
   // googleHandler
@@ -82,7 +85,7 @@ const Registration = () => {
     })
     .catch(err=>console.log(err))
   }
-
+  console.log(error)
   return (
     <div>
       {/* info-container */}

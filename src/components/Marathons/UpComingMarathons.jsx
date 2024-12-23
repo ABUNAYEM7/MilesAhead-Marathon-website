@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaExpandArrowsAlt} from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import CardSkeleton from '../Skeleton/LoadingSkeleton';
 import Card from '../card';
 
@@ -30,7 +31,6 @@ const UpComingMarathons = () => {
           </p>
         );
       }
-      console.log(data)
   return (
     <div className='my-6 p-4'>
       <div>

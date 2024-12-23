@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.swal-popup{
+    z-index: 99999 !important;
+}
+#updateModal{
+    z-index: 99998;
+}

@@ -35,7 +35,7 @@ const Navbar = () => {
         Home
       </NavLink>
       <NavLink
-        to={"/Marathons"}
+        to={"/AllMarathons"}
         className={({ isActive }) =>
           `${
             isActive ? "text-highlight underline underline-offset-8" : ""
@@ -44,6 +44,19 @@ const Navbar = () => {
       >
         Marathons
       </NavLink>
+      {
+        user?.email &&
+        <NavLink
+        to={"/Dashboard"}
+        className={({ isActive }) =>
+          `${
+            isActive ? "text-highlight underline underline-offset-8" : ""
+          } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+        }
+      >
+        Dashboard
+      </NavLink>
+      }
       {!user?.email && (
         <>
           <NavLink
@@ -72,9 +85,11 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
-        <Link className="text-xl font-medium md:text-3xl md:font-bold text-pinkShade"><span className="text-highlight">Miles</span>Ahead</Link>
+    <div className="navbar flex-col sm:flex-row justify-between gap-3 bg-base-100">
+      <div className="">
+        <Link 
+        to={'/'}
+        className="text-xl font-medium md:text-3xl md:font-bold text-pinkShade"><span className="text-highlight">Miles</span>Ahead</Link>
       </div>
       <div className="flex items-center gap-6">
         {/* links-container */}
