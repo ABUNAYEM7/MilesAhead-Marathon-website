@@ -125,8 +125,7 @@ const MyApplyList = () => {
     // sending patch request to backend
     axios.patch(`${import.meta.env.VITE_API_URL}/update-apply/marathon/${id}`,data)
     .then(res=>{
-      console.log(res)
-      if(res.data.matchedCount>0){
+      if(res.data.modifiedCount>0){
         queryClient.invalidateQueries(["/my-applied/marathons", email])
         document.getElementById("updateModal").close()
         Swal.fire({
@@ -137,7 +136,17 @@ const MyApplyList = () => {
                   timer: 1500,
                 });
       }
-      
+      else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
+        document.getElementById("updateModal").close();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Registration Update Successfully",
+          text :"You Did Not Make Changes",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     })
     .catch(err=>console.log(err))
   };
@@ -334,7 +343,7 @@ const MyApplyList = () => {
               </div>
               <div className="form-control mt-6 col-span-1 md:col-span-2">
                 <button className="btn bg-pinkShade text-white hover:text-pinkShade">
-                  Join the Race
+                  Update the Race
                 </button>
               </div>
             </form>

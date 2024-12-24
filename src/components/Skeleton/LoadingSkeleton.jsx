@@ -1,31 +1,45 @@
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import React from "react";
 
 const CardSkeleton = () => {
   return (
-    <SkeletonTheme baseColor="#211f1f" highlightColor="#0091bd">
-    <div className="card bg-base-100 max-w-[400px] max-h-[300px] image-full shadow-xl">
-      <figure>
-        <Skeleton height={200} width="100%" />
-      </figure>
-      <div className="card-body">
-        <h2 className="card-title text-white">
-          <Skeleton width="60%" />
-        </h2>
-        <p className="text-white font-medium">
-          <Skeleton count={2} />
-        </p>
-        <p className="text-white text-base font-medium flex items-center gap-1">
-          <Skeleton width={50} />
-        </p>
-        <p className="text-white text-base font-medium">
-          <Skeleton width="40%" />
-        </p>
-        <div className="card-actions justify-end">
-          <Skeleton width={100} height={40} />
+    <div className="my-6 relative md:max-w-[400px] w-[340px] mx-auto shadow-lg rounded-lg overflow-hidden animate-pulse">
+      {/* Image Placeholder */}
+      <div className="w-full h-48 bg-gray-300"></div>
+
+      {/* Card Content Placeholder */}
+      <div className="p-4 bg-base-100">
+        <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div> {/* Title */}
+        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div> {/* Short description */}
+        <div className="h-4 bg-gray-300 rounded w-5/6 mb-4"></div> {/* Longer text */}
+
+        <div className="flex justify-between items-center mt-4 text-sm font-medium">
+          <div className="h-4 bg-gray-300 rounded w-1/3"></div> {/* Location */}
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div> {/* Distance */}
+        </div>
+
+        <div className="flex justify-between items-center mt-4 text-sm font-medium">
+          <div className="flex flex-col gap-1">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div> {/* Registration Start */}
+            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div> {/* Registration End */}
+            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center mt-4 text-sm font-medium">
+          <div className="flex flex-col text-pinkShade gap-1">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div> {/* Marathon Start */}
+            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          </div>
+          <div className="flex flex-col text-highlight gap-1">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div> {/* Total Registration */}
+            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          </div>
         </div>
       </div>
     </div>
-  </SkeletonTheme>
   );
 };
 

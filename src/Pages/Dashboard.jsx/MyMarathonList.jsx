@@ -139,13 +139,23 @@ const MyMarathonList = () => {
         marathonData
       )
       .then((res) => {
-        if (res.status === 200) {
+        if (res.data.modifiedCount>0) {
           queryClient.invalidateQueries(["/my-marathons", email]);
           document.getElementById("updateModal").close();
           Swal.fire({
             position: "center",
             icon: "success",
             title: "Marathon Update Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
+          document.getElementById("updateModal").close();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Marathon Update Successfully",
+            text :"You Did Not Make Changes",
             showConfirmButton: false,
             timer: 1500,
           });
