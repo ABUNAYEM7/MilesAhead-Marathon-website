@@ -5,6 +5,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import CardSkeleton from "../../components/Skeleton/LoadingSkeleton";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import { debounce } from "lodash";
 
 const MyApplyList = () => {
   const [marathon, setMarathon] = useState("");
@@ -15,13 +16,16 @@ const MyApplyList = () => {
   const email = user?.email;
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["/my-applied/marathons", email,search],
+    queryKey: ["/my-applied/marathons", email, search],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/my-applied/marathons/${email}?search=${search}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/my-applied/marathons/${email}?search=${search}`
       );
       return res.data;
     },
+    enabled: true,
   });
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const MyApplyList = () => {
 
   const updateHandler = (id) => {
     // filtering the specific data
-    const targetMarathon = data.filter((marathon) => marathon._id === id);
+    const targetMarathon = data?.filter((marathon) => marathon._id === id);
     setMarathon(targetMarathon[0]);
     // close-modal
     document.getElementById("updateModal").showModal();
@@ -164,16 +168,7 @@ const MyApplyList = () => {
       .catch((err) => console.log(err));
   };
 
-  // check data length
-  if (data?.length <= 0) {
-    return (
-      <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
-        No Marathon Added Yet
-      </h3>
-    );
-  }
-
-  console.log(search)
+  const searchHandler = debounce((e) => setSearch(e.target.value), 1000);
 
   return (
     <div>
@@ -182,16 +177,24 @@ const MyApplyList = () => {
       </Helmet>
       <div className="mb-5 w-full">
         <input
-          onChange={(e)=>setSearch(e.target.value)}
+          onChange={searchHandler}
+          defaultValue={search}
           type="text"
           placeholder="Search here"
           className="input input-bordered input-info w-full"
         />
       </div>
-      {/* table-container */}
-      <div className="overflow-x-auto">
+      {
+        // check data length
+        data.length === 0 ? 
+        <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
+        No Marathon Found
+      </h3>
+      :
+      <>
+      {/* table container */}
+            <div className="overflow-x-auto">
         <table className="table">
-          {/* head */}
           <thead>
             <tr>
               <th>No:</th>
@@ -208,7 +211,7 @@ const MyApplyList = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((marathon, index) => (
+            {data?.map((marathon, index) => (
               <tr key={marathon._id} className="bg-base-200">
                 <th>{index + 1}</th>
                 <td>{marathon.title}</td>
@@ -240,16 +243,15 @@ const MyApplyList = () => {
           </tbody>
         </table>
       </div>
-      {/* modal-container */}
       <div>
+        {/* modal container */}
         <dialog id="updateModal" className="modal">
           <div className="modal-box w-11/12 max-w-5xl bg-registerBg">
-            {/* form */}
             <form
               onSubmit={(e) => submitHandler(e, marathon?._id)}
               className="card-body grid grid-cols-1 md:grid-cols-2 gap-5"
             >
-              {/* marathon title */}
+              {/* title */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Marathon Title</span>
@@ -279,7 +281,7 @@ const MyApplyList = () => {
                   readOnly
                 />
               </div>
-              {/* First name */}
+              {/* first name */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">First Name</span>
@@ -293,7 +295,7 @@ const MyApplyList = () => {
                   required
                 />
               </div>
-              {/* Last name */}
+              {/* last name */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Last Name</span>
@@ -307,10 +309,10 @@ const MyApplyList = () => {
                   required
                 />
               </div>
-              {/* Mobile No */}
+              {/* contact number */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Mobile Number</span>
+                  <span className="label-text">Contact Number</span>
                 </label>
                 <input
                   defaultValue={marathon?.number}
@@ -323,7 +325,7 @@ const MyApplyList = () => {
                   required
                 />
               </div>
-              {/* Marathon Date */}
+              {/* marathon date */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Marathon Date :</span>
@@ -337,7 +339,7 @@ const MyApplyList = () => {
                   readOnly
                 />
               </div>
-              {/* Location*/}
+              {/* location */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Location</span>
@@ -352,7 +354,7 @@ const MyApplyList = () => {
                   readOnly
                 />
               </div>
-              {/* Distance*/}
+              {/* distance */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text ">Distance</span>
@@ -367,6 +369,7 @@ const MyApplyList = () => {
                   readOnly
                 />
               </div>
+              {/* update */}
               <div className="form-control mt-6 col-span-1 md:col-span-2">
                 <button className="btn bg-pinkShade text-white hover:text-pinkShade">
                   Update the Race
@@ -376,6 +379,8 @@ const MyApplyList = () => {
           </div>
         </dialog>
       </div>
+      </>
+      }
     </div>
   );
 };
