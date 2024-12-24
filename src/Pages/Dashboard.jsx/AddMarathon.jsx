@@ -18,7 +18,7 @@ const AddMarathon = () => {
     distance: "",
     description: "",
     image: "",
-    createdAt: format(new Date(), "P"),
+    createAt: format(new Date(), "P"),
   });
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -97,7 +97,7 @@ const AddMarathon = () => {
     }
 
     // 4. Validate Created At (Marathon Start Date should not be before Created At)
-    if (formData.marathonStart < new Date(formData.createdAt)) {
+    if (formData.marathonStart < new Date(formData.createAt)) {
       return Swal.fire({
         position: "center",
         icon: "error",
@@ -210,8 +210,8 @@ const AddMarathon = () => {
           <label className="block text-sm font-medium mb-2">Created At</label>
           <input
             type="text"
-            name="createdAt"
-            value={formData.createdAt}
+            name="createAt"
+            value={formData.createAt}
             readOnly
             className="input input-bordered w-full max-w-[70%] bg-gray-100 cursor-not-allowed"
           />

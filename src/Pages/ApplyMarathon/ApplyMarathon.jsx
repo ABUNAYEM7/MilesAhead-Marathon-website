@@ -5,16 +5,16 @@ import axios from "axios";
 import CardSkeleton from "../../components/Skeleton/LoadingSkeleton";
 import Info from "../../components/Shared/Info";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import Lottie from "lottie-react";
-import marathonLottie from '../../../public/marathonLottie.json'
+import marathonLottie from "../../../public/marathonLottie.json";
 
 const ApplyMarathon = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["/marathons/details/", id],
     queryFn: async () => {
@@ -43,67 +43,58 @@ const ApplyMarathon = () => {
     );
   }
 
-  const {
-    _id,
-    createAt,
-    description,
-    distance,
-    image,
-    location,
-    marathonEnd,
-    marathonStart,
-    registrationCount,
-    registrationEnd,
-    registrationStart,
-    title,
-  } = data;
+  const { _id, distance, location, marathonStart, title } = data;
 
   const submitHandler = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    const registrationDate = format(new Date(),"P")
-    const applicantImage = user?.photoURL
+    const registrationDate = format(new Date(), "P");
+    const applicantImage = user?.photoURL;
     const jobId = _id;
-    form.append('registrationDate',registrationDate)
-    form.append('applicantImage',applicantImage)
-    form.append('jobId',jobId)
-    const registerData = Object.fromEntries(form.entries())
-    registerData.marathonStart = format(new Date(marathonStart),"P")
-    
-    axios.post(`${import.meta.env.VITE_API_URL}/apply-marathons`,registerData)
-    .then(res=>{
-        if(res.data.insertedId){
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Applied Successful",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              navigate('/Dashboard/MyApplyList')
-        }
-    })
-    .catch(err=>{
-        if(err.status === 400){
-            console.log(err)
-            return Swal.fire({
-                position: "center",
-                icon: "error",
-                title:'Enabled To Register' ,
-                text :"You Can't Register Twice In Same Marathon Please Try Another",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-        }
-        Swal.fire({
+    form.append("registrationDate", registrationDate);
+    form.append("applicantImage", applicantImage);
+    form.append("jobId", jobId);
+    const registerData = Object.fromEntries(form.entries());
+    registerData.marathonStart = format(new Date(marathonStart), "P");
+    console.log(registerData);
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/apply-marathons`, registerData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
             position: "center",
-            icon: "error",
-            title:err.message || err.code ,
+            icon: "success",
+            title: "Applied Successful",
             showConfirmButton: false,
             timer: 1500,
           });
-    })
+          navigate("/Dashboard/MyApplyList");
+        }
+      })
+      .catch((err) => {
+        if (err.status === 400) {
+          console.log(err);
+          return Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Enabled To Register",
+            text: "You Can't Register Twice In Same Marathon Please Try Another",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: err.message || err.code,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
+  const marathonStartDate = data?.marathonStart
+    ? format(parse(data.marathonStart, "MM/dd/yyyy", new Date()), "yyyy-MM-dd")
+    : "";
 
   return (
     <div>
@@ -125,9 +116,10 @@ const ApplyMarathon = () => {
           <h3 className="text-xl md:text-3xl md:font-bold my-3 text-center text-highlight">
             Joint The Race And Cross The Finish Line{" "}
           </h3>
-          <form 
-          onSubmit={submitHandler}
-          className="card-body grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form
+            onSubmit={submitHandler}
+            className="card-body grid grid-cols-1 md:grid-cols-2 gap-5"
+          >
             {/* marathon title */}
             <div className="form-control">
               <label className="label">
@@ -205,7 +197,7 @@ const ApplyMarathon = () => {
                 <span className="label-text">Marathon Date :</span>
               </label>
               <input
-                defaultValue={marathonStart ||""}
+                defaultValue={marathonStartDate || ""}
                 name="marathonDate"
                 type="date"
                 className="input input-bordered"
@@ -251,7 +243,7 @@ const ApplyMarathon = () => {
           </form>
         </div>
         <div className="w-full md:1/2 bg-gray-900 rounded-xl">
-        <Lottie animationData={marathonLottie} loop={true} />
+          <Lottie animationData={marathonLottie} loop={true} />
         </div>
       </div>
     </div>

@@ -169,7 +169,7 @@ const MyApplyList = () => {
   };
 
   const searchHandler = debounce((e) => setSearch(e.target.value), 1000);
-
+  console.log(data)
   return (
     <div>
       <Helmet>
@@ -200,7 +200,7 @@ const MyApplyList = () => {
               <th>No:</th>
               <th className="w-20">Title</th>
               <th>First Name</th>
-              <th>First Name</th>
+              <th>Last Name</th>
               <th>Contact Number</th>
               <th>Registration Date</th>
               <th>Marathon Date </th>

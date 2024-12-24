@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React, { useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -27,17 +28,19 @@ const getTimeDays = (time) => (time / daySeconds) | 0;
 
 const CountdownTimer = ({ endDate }) => {
   const [isExpired, setIsExpired] = useState(false);
-
+  const formateEndDate = format(new Date(endDate),"yyyy-MM-dd")
   const start = Math.floor(Date.now() / 1000); 
-  const endTime = Math.floor(new Date(endDate).getTime() / 1000); 
+  const endTime = Math.floor(new Date(formateEndDate).getTime() / 1000); 
 
   const remainingTime = endTime - start;
   const days = Math.ceil(remainingTime / daySeconds);
   const daysDuration = days * daySeconds;
 
+
   const handleComplete = () => {
-    const currentRemaining = endDate - Math.floor(new Date() / 1000)
-    if(currentRemaining < 0){
+    const currentRemaining = endTime - Math.floor(new Date() / 1000)
+    // time-validation
+    if(currentRemaining <= 0){
         setIsExpired(true); 
     return { shouldRepeat: false };
     }
@@ -60,7 +63,7 @@ const CountdownTimer = ({ endDate }) => {
           {...timerProps}
           colors="#7E2E84"
           duration={daysDuration}
-          initialRemainingTime={remainingTime}
+          initialRemainingTime={Math.max(remainingTime,0)}
           onComplete={handleComplete}
         >
           {({ elapsedTime, color }) => (

@@ -12,6 +12,7 @@ import MyMarathonList from '../Pages/Dashboard.jsx/MyMarathonList';
 import MyApplyList from '../Pages/Dashboard.jsx/MyApplyList';
 import ApplyMarathon from '../Pages/ApplyMarathon/ApplyMarathon';
 import NotFound from '../Pages/ErrorPage/NotFound';
+import PrivateRoute from '../Pages/PrivateRoute/PrivateRoute';
 
 const MainRoutes = () => {
   return (
@@ -19,9 +20,9 @@ const MainRoutes = () => {
         <Route path ='/' element ={<MainLayout/>}>
           <Route index element={<Home/>}></Route>
           {/* main-routes */}
-          <Route path='/AllMarathons' element={<AllMarathons/>}></Route>
+          <Route path='/AllMarathons' element={<PrivateRoute><AllMarathons/></PrivateRoute>}></Route>
           {/* dashboard-nested-routes */}
-          <Route path='/Dashboard' element={<Dashboard/>}>
+          <Route path='/Dashboard' element={}>
             <Route index element={<AddMarathon/>}/>
             <Route path='MyMarathonList' element={<MyMarathonList/>}/>
             <Route path='MyApplyList' element={<MyApplyList/>}/>

@@ -22,7 +22,7 @@ const MyMarathonList = () => {
     distance: "",
     description: "",
     image: "",
-    createdAt: format(new Date(), "P"),
+    createAt: format(new Date(), "P"),
   });
   const queryClient = useQueryClient();
 
@@ -50,7 +50,7 @@ const MyMarathonList = () => {
       distance: marathon?.distance || "",
       description: marathon?.description || "",
       image: marathon?.image || "",
-      createdAt: marathon?.createdAt || "",
+      createAt: marathon?.createAt || "",
     });
   }, [marathon]);
 
@@ -129,7 +129,7 @@ const MyMarathonList = () => {
     }
 
     // 4. Validate Created At (Marathon Start Date should not be before Created At)
-    if (formData.marathonStart < new Date(formData.createdAt)) {
+    if (formData.marathonStart < new Date(formData.createAt)) {
       return setErr("Marathon start date cannot be before the created date.");
     }
     setErr("");
@@ -139,7 +139,7 @@ const MyMarathonList = () => {
         marathonData
       )
       .then((res) => {
-        if (res.data.modifiedCount>0) {
+        if (res.data.modifiedCount > 0) {
           queryClient.invalidateQueries(["/my-marathons", email]);
           document.getElementById("updateModal").close();
           Swal.fire({
@@ -149,14 +149,13 @@ const MyMarathonList = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-        }
-        else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
+        } else if (res.data.modifiedCount === 0 && res.data.matchedCount > 0) {
           document.getElementById("updateModal").close();
           Swal.fire({
             position: "center",
             icon: "success",
             title: "Marathon Update Successfully",
-            text :"You Did Not Make Changes",
+            text: "You Did Not Make Changes",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -229,10 +228,12 @@ const MyMarathonList = () => {
       });
   };
 
-  if(data?.length <= 0){
-    return <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
-      No Marathon Added Yet
-    </h3>
+  if (data?.length <= 0) {
+    return (
+      <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
+        No Marathon Added Yet
+      </h3>
+    );
   }
 
   return (
@@ -259,13 +260,13 @@ const MyMarathonList = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((marathon, index) => (
+              {data?.map((marathon, index) => (
                 <tr key={marathon._id} className="bg-base-200">
                   <th>{index + 1}</th>
                   <td>{marathon.title}</td>
                   <td>{marathon.registrationStart}</td>
                   <td>{marathon.marathonStart}</td>
-                  <td>{marathon.createdAt}</td>
+                  <td>{marathon.createAt}</td>
                   <td>{marathon.distance}</td>
                   <td>{marathon.registrationCount}</td>
                   <td>
@@ -368,8 +369,8 @@ const MyMarathonList = () => {
                   </label>
                   <input
                     type="text"
-                    name="createdAt"
-                    value={formData.createdAt}
+                    name="createAt"
+                    value={formData.createAt}
                     readOnly
                     className="input input-bordered w-full max-w-[70%] bg-gray-100 cursor-not-allowed"
                   />

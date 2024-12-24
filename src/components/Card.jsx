@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Card = ({ marathon }) => {
-  const { title, location, distance, description, image } = marathon;
+  const { title, location, distance, description, image,createAt } = marathon;
 
   return (
     <div className="my-6 relative md:max-w-[400px] w-[340px]  mx-auto shadow-lg rounded-lg overflow-hidden group">
@@ -16,7 +16,10 @@ const Card = ({ marathon }) => {
       </figure>
       {/* Card content */}
       <div className="p-4 bg-base-100">
-        <h3 className="text-lg font-bold">{title}</h3>
+      <div className="badge badge-secondary mb-2">Create At: {createAt}</div>
+        <h3 className="text-lg font-bold">
+          {title}
+          </h3>
         <p className="text-sm text-gray-500 mt-2">
           {description.slice(0, 80)}...
         </p>
