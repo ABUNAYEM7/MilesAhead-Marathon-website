@@ -4,8 +4,9 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import axios from "axios"
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const AddMarathon = () => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,8 @@ const AddMarathon = () => {
     image: "",
     createdAt: format(new Date(), "P"),
   });
-  const navigate = useNavigate()
-  const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,9 +32,9 @@ const AddMarathon = () => {
     e.preventDefault();
     const marathonData = {
       ...formData,
-      creatorName : user?.displayName,
-      creatorEmail : user?.email,
-      creatorImage : user?.photoURL,
+      creatorName: user?.displayName,
+      creatorEmail: user?.email,
+      creatorImage: user?.photoURL,
       registrationStart: formData.registrationStart
         ? format(formData.registrationStart, "P")
         : null,
@@ -51,72 +52,85 @@ const AddMarathon = () => {
 
     // validation
     // 1. Validate Registration Start Date
-  if (!formData.registrationStart || formData.registrationStart < new Date().setHours(0,0,0,0)) {
-    return Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Invalid Registration Start Date",
-      text: "Registration start date must not be Current Date.",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
-    
-  // 2. Validate Registration End Date
-  if (!formData.registrationEnd || formData.registrationEnd < formData.registrationStart) {
-    return Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Invalid Registration End Date",
-      text: "Registration end date must be after the registration start date.",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
+    if (
+      !formData.registrationStart ||
+      formData.registrationStart < new Date().setHours(0, 0, 0, 0)
+    ) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Invalid Registration Start Date",
+        text: "Registration start date must not be Current Date.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
 
-  // 3. Validate Marathon Start Date
-  if (!formData.marathonStart || formData.marathonStart <= formData.registrationEnd) {
-    return Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Invalid Marathon Start Date",
-      text: "Marathon start date must be after the registration end date.",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
+    // 2. Validate Registration End Date
+    if (
+      !formData.registrationEnd ||
+      formData.registrationEnd < formData.registrationStart
+    ) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Invalid Registration End Date",
+        text: "Registration end date must be after the registration start date.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
 
-  // 4. Validate Created At (Marathon Start Date should not be before Created At)
-  if (formData.marathonStart < new Date(formData.createdAt)) {
-    return Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Invalid Marathon Start Date",
-      text: "Marathon start date cannot be before the created date.",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
+    // 3. Validate Marathon Start Date
+    if (
+      !formData.marathonStart ||
+      formData.marathonStart <= formData.registrationEnd
+    ) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Invalid Marathon Start Date",
+        text: "Marathon start date must be after the registration end date.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    // 4. Validate Created At (Marathon Start Date should not be before Created At)
+    if (formData.marathonStart < new Date(formData.createdAt)) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Invalid Marathon Start Date",
+        text: "Marathon start date cannot be before the created date.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
     // post data in backend
-    axios.post(`${import.meta.env.VITE_API_URL}/add-marathon`,marathonData)
-    .then(res=>{
-      if(res.data.insertedId){
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Congress",
-          text: "Marathon is added successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate('/AllMarathons')
-      }
-    })
-    .catch(err=>console.log(err))
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/add-marathon`, marathonData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Congress",
+            text: "Marathon is added successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/AllMarathons");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-base-100 shadow-md rounded-md">
+      <Helmet>
+        <title>Dashboard||Add Marathon</title>
+      </Helmet>
       <h2 className="text-2xl font-bold text-highlight mb-4">
         Create Marathon
       </h2>

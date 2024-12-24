@@ -11,6 +11,7 @@ import AddMarathon from '../Pages/Dashboard.jsx/AddMarathon';
 import MyMarathonList from '../Pages/Dashboard.jsx/MyMarathonList';
 import MyApplyList from '../Pages/Dashboard.jsx/MyApplyList';
 import ApplyMarathon from '../Pages/ApplyMarathon/ApplyMarathon';
+import NotFound from '../Pages/ErrorPage/NotFound';
 
 const MainRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const MainRoutes = () => {
           {/* dynamic-routes */}
           <Route path='/details/:id' element={<MarathonDetails/>} />
           <Route path='/apply-marathon/:id' element={<ApplyMarathon/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Route>
     </Routes>
   )

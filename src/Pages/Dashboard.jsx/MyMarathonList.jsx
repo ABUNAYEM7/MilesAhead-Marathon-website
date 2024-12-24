@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import "../../index.css";
+import { Helmet } from "react-helmet";
 
 const MyMarathonList = () => {
   const [err, setErr] = useState("");
@@ -225,6 +226,9 @@ const MyMarathonList = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Dashboard||My Marathon List</title>
+      </Helmet>
       <div>
         {/* table-container */}
         <div className="overflow-x-auto">

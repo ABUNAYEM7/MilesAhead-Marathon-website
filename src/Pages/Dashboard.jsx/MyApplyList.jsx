@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import CardSkeleton from "../../components/Skeleton/LoadingSkeleton";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 const MyApplyList = () => {
   const [marathon, setMarathon] = useState("");
   const { user } = useContext(AuthContext);
@@ -147,9 +148,11 @@ const MyApplyList = () => {
       No Marathon Added Yet
     </h3>
   }
-  console.log(data)
   return (
     <div>
+      <Helmet>
+        <title>Dashboard||Marathon Apply List </title>
+      </Helmet>
       {/* table-container */}
       <div className="overflow-x-auto">
         <table className="table">
@@ -160,7 +163,7 @@ const MyApplyList = () => {
               <th className="w-20">Title</th>
               <th>First Name</th>
               <th>First Name</th>
-              <th>Mobile No</th>
+              <th>Contact Number</th>
               <th>Registration Date</th>
               <th>Marathon Date </th>
               <th>Location </th>

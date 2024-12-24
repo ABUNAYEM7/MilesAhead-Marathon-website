@@ -7,6 +7,7 @@ import Info from "../../components/Shared/Info";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const ApplyMarathon = () => {
   const { id } = useParams();
@@ -65,46 +66,49 @@ const ApplyMarathon = () => {
     form.append('applicantImage',applicantImage)
     form.append('jobId',jobId)
     const registerData = Object.fromEntries(form.entries())
-    console.log(registerData)
+    registerData.marathonStart = format(new Date(marathonStart),"P")
     
-    // axios.post(`${import.meta.env.VITE_API_URL}/apply-marathons`,registerData)
-    // .then(res=>{
-    //     console.log(res)
-    //     if(res.data.insertedId){
-    //         Swal.fire({
-    //             position: "center",
-    //             icon: "success",
-    //             title: "Applied Successful",
-    //             showConfirmButton: false,
-    //             timer: 1500,
-    //           });
-    //           navigate('/Dashboard/MyApplyList')
-    //     }
-    // })
-    // .catch(err=>{
-    //     if(err.status === 400){
-    //         console.log(err)
-    //         return Swal.fire({
-    //             position: "center",
-    //             icon: "error",
-    //             title:'Enabled To Register' ,
-    //             text :"You Can't Register Twice In Same Marathon Please Try Another",
-    //             showConfirmButton: false,
-    //             timer: 1500,
-    //           });
-    //     }
-    //     Swal.fire({
-    //         position: "center",
-    //         icon: "error",
-    //         title:err.message || err.code ,
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    // })
+    axios.post(`${import.meta.env.VITE_API_URL}/apply-marathons`,registerData)
+    .then(res=>{
+        console.log(res)
+        if(res.data.insertedId){
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Applied Successful",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate('/Dashboard/MyApplyList')
+        }
+    })
+    .catch(err=>{
+        if(err.status === 400){
+            console.log(err)
+            return Swal.fire({
+                position: "center",
+                icon: "error",
+                title:'Enabled To Register' ,
+                text :"You Can't Register Twice In Same Marathon Please Try Another",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+        }
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title:err.message || err.code ,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+    })
   };
 
   return (
     <div>
+      <Helmet>
+        <title>MilesAhead||Marathon Apply</title>
+      </Helmet>
       {/* info-container */}
       <div>
         <Info
@@ -182,7 +186,7 @@ const ApplyMarathon = () => {
             {/* Mobile No */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Mobile Number</span>
+                <span className="label-text">Contact Number</span>
               </label>
               <input
                 name="number"
@@ -200,7 +204,7 @@ const ApplyMarathon = () => {
                 <span className="label-text">Marathon Date :</span>
               </label>
               <input
-                defaultValue={marathonStart || ""}
+                defaultValue={marathonStart ||""}
                 name="marathonDate"
                 type="date"
                 className="input input-bordered"

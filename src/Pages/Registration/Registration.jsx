@@ -4,6 +4,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { Helmet } from "react-helmet";
 
 
 const Registration = () => {
@@ -88,6 +89,9 @@ const Registration = () => {
   console.log(error)
   return (
     <div>
+      <Helmet>
+        <title>MilesAhead||Sign Up</title>
+      </Helmet>
       {/* info-container */}
       <div>
         <Info

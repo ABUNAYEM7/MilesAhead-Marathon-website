@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import CardSkeleton from '../../components/Skeleton/LoadingSkeleton';
+import { format } from "date-fns";
+import { Helmet } from 'react-helmet';
+
 
 const MarathonDetails = () => {
   const { id } = useParams();
@@ -47,8 +50,17 @@ const MarathonDetails = () => {
     title,
   } = data;
 
+  // deadline validation
+  const currentDate = new Date().setHours(0,0,0,0)
+  const deadline = data?new Date(registrationEnd).setHours(0,0,0,0) :null
+
+  const expired = deadline && currentDate > deadline;
+
   return (
     <div className="container mx-auto my-12 px-4">
+      <Helmet>
+        <title>MilesAhead||Marathon Details</title>
+      </Helmet>
       <div className="max-w-5xl mx-auto shadow-lg rounded-lg overflow-hidden">
         <img src={image} alt={title} className="w-full max-h-[550px] object-cover object-center" />
 
@@ -94,9 +106,12 @@ const MarathonDetails = () => {
           {/* Register Button */}
           <div className="mt-8 text-center">
             <Link 
+            disabled={expired}
             to={`/apply-marathon/${_id}`}
             className="btn bg-highlight text-white hover:bg-pinkShade px-6 py-2 rounded-md">
-              Register Now
+              {
+                expired ? 'Expired' : 'Register Now'
+              }
             </Link>
           </div>
         </div>
