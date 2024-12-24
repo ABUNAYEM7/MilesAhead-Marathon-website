@@ -8,6 +8,8 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import Lottie from "lottie-react";
+import marathonLottie from '../../../public/marathonLottie.json'
 
 const ApplyMarathon = () => {
   const { id } = useParams();
@@ -70,7 +72,6 @@ const ApplyMarathon = () => {
     
     axios.post(`${import.meta.env.VITE_API_URL}/apply-marathons`,registerData)
     .then(res=>{
-        console.log(res)
         if(res.data.insertedId){
             Swal.fire({
                 position: "center",
@@ -119,7 +120,7 @@ const ApplyMarathon = () => {
         />
       </div>
       {/* main-container */}
-      <div className="my-6 p-4  flex flex-col md:flex-row gap-5 ">
+      <div className="my-6 p-4  flex flex-col-reverse md:flex-row gap-5 ">
         <div className="w-full md:1/2 p-4 rounded-xl shadow-2xl bg-registerBg bg-no-repeat bg-cover bg-center">
           <h3 className="text-xl md:text-3xl md:font-bold my-3 text-center text-highlight">
             Joint The Race And Cross The Finish Line{" "}
@@ -249,7 +250,9 @@ const ApplyMarathon = () => {
             </div>
           </form>
         </div>
-        <div className="w-full md:1/2">lato will be here</div>
+        <div className="w-full md:1/2 bg-gray-900 rounded-xl">
+        <Lottie animationData={marathonLottie} loop={true} />
+        </div>
       </div>
     </div>
   );

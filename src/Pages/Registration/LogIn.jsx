@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import Info from "../../components/Shared/Info";
-import bgImage from "../../assets/registerBg.svg"
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Helmet } from "react-helmet";
+import Lottie from "lottie-react";
+import loginLottie from "../../../public/loginLottie.json"
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -136,7 +137,7 @@ const LogIn = () => {
             </div>
           </form>
           <div >
-            <h3 className="text-base font-semibold text-white text-center">Don't Have An Account ? 
+            <h3 className="text-base font-semibold text-pinkShade text-center">Don't Have An Account ? 
 
               <span className="text-black underline mx-2"><Link to={'/Registration'}>
               Register
@@ -144,7 +145,9 @@ const LogIn = () => {
               </span></h3>
           </div>
         </div>
-        <div className="w-full md:w-1/2"></div>
+        <div className="w-full max-h-[550px] md:w-1/2 p-4">
+        <Lottie animationData={loginLottie} loop={true} />
+        </div>
       </div>
     </div>
   );

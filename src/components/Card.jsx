@@ -55,7 +55,7 @@ const Card = ({ marathon }) => {
           {marathon.registrationStart ? (
             <Link
               to={`/details/${marathon._id}`}
-              className="btn bg-pinkShade border-none hover:text-pinkShade"
+              className="btn bg-pinkShade text-white border-none hover:text-pinkShade"
             >
               See More
             </Link>

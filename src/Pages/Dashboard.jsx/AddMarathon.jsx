@@ -285,7 +285,7 @@ const AddMarathon = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="btn bg-pinkShade w-full col-span-1 md:col-span-2"
+          className="btn bg-pinkShade text-white hover:text-highlight w-full col-span-1 md:col-span-2"
         >
           Create Marathon
         </button>

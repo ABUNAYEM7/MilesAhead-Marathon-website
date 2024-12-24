@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Helmet } from "react-helmet";
+import Lottie from "lottie-react";
+import registerLottie from "../../../public/registerLottie.json"
 
 
 const Registration = () => {
@@ -101,7 +103,7 @@ const Registration = () => {
           }
         />
       </div>
-      <div className="flex flex-col md:flex-row gap-5 my-6 p-4 border-2 border-black  bg-registerBg bg-no-repeat bg-cover bg-center">
+      <div className="flex flex-col md:flex-row-reverse gap-5 my-6 p-4 border-2 border-black bg-registerBg bg-no-repeat bg-cover bg-center">
         {/* form-container */}
         <div 
         className="w-full md:w-1/2 p-4 rounded-xl border-2 shadow-xl">
@@ -184,7 +186,7 @@ const Registration = () => {
             </div>
           </form>
           <div >
-            <h3 className="text-base font-semibold text-white text-center">Already Have An Account ? 
+            <h3 className="text-base font-semibold text-pinkShade text-center">Already Have An Account ? 
 
               <span className="text-black underline mx-2"><Link to={'/LogIn'}>
               LogIn
@@ -192,7 +194,9 @@ const Registration = () => {
               </span></h3>
           </div>
         </div>
-        <div className="w-full md:w-1/2"></div>
+        <div className="w-full md:w-1/2 p-4">
+        <Lottie animationData={registerLottie} loop={true} />
+        </div>
       </div>
     </div>
   );

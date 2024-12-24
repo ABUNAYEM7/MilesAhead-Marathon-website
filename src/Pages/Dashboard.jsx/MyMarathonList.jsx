@@ -149,7 +149,8 @@ const MyMarathonList = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-        }else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
+        }
+        else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
           document.getElementById("updateModal").close();
           Swal.fire({
             position: "center",
@@ -228,7 +229,7 @@ const MyMarathonList = () => {
       });
   };
 
-  if(data.length <= 0){
+  if(data?.length <= 0){
     return <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
       No Marathon Added Yet
     </h3>
@@ -443,9 +444,9 @@ const MyMarathonList = () => {
                 {/* Submit Button */}{" "}
                 <button
                   type="submit"
-                  className="btn bg-pinkShade w-full col-span-1 md:col-span-2"
+                  className="btn bg-pinkShade text-white hover:text-highlight w-full col-span-1 md:col-span-2"
                 >
-                  update Marathon
+                  Update Marathon
                 </button>
               </form>
             </div>

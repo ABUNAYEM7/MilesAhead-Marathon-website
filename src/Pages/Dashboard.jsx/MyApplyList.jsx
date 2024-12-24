@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -6,18 +5,20 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import CardSkeleton from "../../components/Skeleton/LoadingSkeleton";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+
 const MyApplyList = () => {
   const [marathon, setMarathon] = useState("");
+  const [search, setSearch] = useState("");
+  const queryClient = useQueryClient();
+
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const queryClient = useQueryClient()
   const email = user?.email;
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["/my-applied/marathons", email],
+    queryKey: ["/my-applied/marathons", email,search],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/my-applied/marathons/${email}`
+        `${import.meta.env.VITE_API_URL}/my-applied/marathons/${email}?search=${search}`
       );
       return res.data;
     },
@@ -35,7 +36,7 @@ const MyApplyList = () => {
       registrationDate: marathon.registrationDate || "",
       title: marathon.title || "",
     });
-  },[]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -67,101 +68,126 @@ const MyApplyList = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn bg-pinkShade mr-4 text-white hover:text-pinkShade",
-        cancelButton: "btn bg-highlight text-white hover:text-highlight"
+        cancelButton: "btn bg-highlight text-white hover:text-highlight",
       },
-      buttonsStyling: false
+      buttonsStyling: false,
     });
-    swalWithBootstrapButtons.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`${import.meta.env.VITE_API_URL}/delete/my-registration/${id}`)
-    .then(res=>{
-      {
-        if(res.data.deletedCount > 0){
-          queryClient.invalidateQueries(["/my-applied/marathons", email])
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(
+              `${import.meta.env.VITE_API_URL}/delete/my-registration/${id}`
+            )
+            .then((res) => {
+              {
+                if (res.data.deletedCount > 0) {
+                  queryClient.invalidateQueries([
+                    "/my-applied/marathons",
+                    email,
+                  ]);
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Marathon Deleted Successfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
+              }
+            })
+            .catch((err) => {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: err.message || err.code,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your Registration Info is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  };
+
+  const submitHandler = (e, id) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const data = Object.fromEntries(form.entries());
+
+    // sending patch request to backend
+    axios
+      .patch(
+        `${import.meta.env.VITE_API_URL}/update-apply/marathon/${id}`,
+        data
+      )
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          queryClient.invalidateQueries(["/my-applied/marathons", email]);
+          document.getElementById("updateModal").close();
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Marathon Deleted Successfully",
+            title: "Registration Update Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else if (res.data.modifiedCount === 0 && res.data.matchedCount > 0) {
+          document.getElementById("updateModal").close();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Registration Update Successfully",
+            text: "You Did Not Make Changes",
             showConfirmButton: false,
             timer: 1500,
           });
         }
-      }
-    })
-     .catch((err) => {
-                  Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: err.message || err.code,
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                });
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire({
-          title: "Cancelled",
-          text: "Your Registration Info is safe :)",
-          icon: "error"
-        });
-      }
-    });
+      })
+      .catch((err) => console.log(err));
   };
 
-  const submitHandler = (e,id) => {
-    e.preventDefault()
-    const form = new FormData(e.target)
-    const data = Object.fromEntries(form.entries())
-    // sending patch request to backend
-    axios.patch(`${import.meta.env.VITE_API_URL}/update-apply/marathon/${id}`,data)
-    .then(res=>{
-      if(res.data.modifiedCount>0){
-        queryClient.invalidateQueries(["/my-applied/marathons", email])
-        document.getElementById("updateModal").close()
-        Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Registration Update Successfully",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-      }
-      else if(res.data.modifiedCount === 0 && res.data.matchedCount > 0 ){
-        document.getElementById("updateModal").close();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Registration Update Successfully",
-          text :"You Did Not Make Changes",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    })
-    .catch(err=>console.log(err))
-  };
-  
   // check data length
-  if(data.length <= 0){
-    return <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
-      No Marathon Added Yet
-    </h3>
+  if (data?.length <= 0) {
+    return (
+      <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
+        No Marathon Added Yet
+      </h3>
+    );
   }
+
+  console.log(search)
+
   return (
     <div>
       <Helmet>
         <title>Dashboard||Marathon Apply List </title>
       </Helmet>
+      <div className="mb-5 w-full">
+        <input
+          onChange={(e)=>setSearch(e.target.value)}
+          type="text"
+          placeholder="Search here"
+          className="input input-bordered input-info w-full"
+        />
+      </div>
       {/* table-container */}
       <div className="overflow-x-auto">
         <table className="table">
@@ -220,7 +246,7 @@ const MyApplyList = () => {
           <div className="modal-box w-11/12 max-w-5xl bg-registerBg">
             {/* form */}
             <form
-              onSubmit={(e)=>submitHandler(e,marathon?._id)}
+              onSubmit={(e) => submitHandler(e, marathon?._id)}
               className="card-body grid grid-cols-1 md:grid-cols-2 gap-5"
             >
               {/* marathon title */}
@@ -273,7 +299,7 @@ const MyApplyList = () => {
                   <span className="label-text">Last Name</span>
                 </label>
                 <input
-                defaultValue={marathon?.lname}
+                  defaultValue={marathon?.lname}
                   name="lname"
                   type="text"
                   placeholder="Last Name"
