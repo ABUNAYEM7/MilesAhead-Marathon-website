@@ -3,6 +3,8 @@ import Banner from '../../components/Banner/Banner'
 import Marathons from '../../components/Marathons/Marathons'
 import UpComingMarathons from '../../components/Marathons/UpComingMarathons'
 import {Helmet} from "react-helmet";
+import ManageYourEvent from '../../components/RiseEvent/ManageYourEvent';
+import JoinMarathon from '../../components/JoinMarathon/JoinMarathon';
 
 const Home = () => {
   return (
@@ -18,6 +20,12 @@ const Home = () => {
       </section>
       <section>
         <UpComingMarathons/>
+      </section>
+      <section>
+        <ManageYourEvent/>
+      </section>
+      <section>
+        <JoinMarathon/>
       </section>
     </div>
   )

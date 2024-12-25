@@ -52,19 +52,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const userLogOut = async () => {
-    setLoading(true);
-    try {
-      await signOut(Auth);
-      setUser(null);
-    } catch (err) {
-      throw Error(err);
-    } finally {
-      setLoading(false);
-    }
+    return signOut(Auth);
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(Auth, async (currentUser) => {
+      if (import.meta.env.MODE === 'production') {
+        console.log(currentUser);
+      }
       setLoading(true);
       try {
         if (currentUser?.email) {
@@ -81,6 +76,7 @@ const AuthProvider = ({ children }) => {
           await axios.get(`${import.meta.env.VITE_API_URL}/clearCookie`, {
             withCredentials: true,
           });
+          setUser(null);
         }
       } catch (err) {
         console.error("Error during authentication or clearing cookies:", err);

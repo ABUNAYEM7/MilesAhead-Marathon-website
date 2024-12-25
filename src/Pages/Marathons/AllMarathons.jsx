@@ -39,10 +39,12 @@ const AllMarathons = () => {
   }
 
   const createAtHandler=()=>{
+    setRegisterDate('')
     setCreateDate('des')
   }
 
   const sortByRegisterDate =()=>{
+    setCreateDate('')
     setRegisterDate('asc')
   }
 

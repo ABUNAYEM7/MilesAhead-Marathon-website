@@ -123,7 +123,11 @@ const AddMarathon = () => {
           navigate("/AllMarathons");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{
+        if (import.meta.env.MODE === 'production') {
+          console.log(err)
+        }
+      });
   };
 
   return (

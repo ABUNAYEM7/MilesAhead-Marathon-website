@@ -56,7 +56,6 @@ const ApplyMarathon = () => {
     form.append("jobId", jobId);
     const registerData = Object.fromEntries(form.entries());
     registerData.marathonStart = format(new Date(marathonStart), "P");
-    console.log(registerData);
     axios
       .post(`${import.meta.env.VITE_API_URL}/apply-marathons`, registerData)
       .then((res) => {
@@ -73,7 +72,9 @@ const ApplyMarathon = () => {
       })
       .catch((err) => {
         if (err.status === 400) {
-          console.log(err);
+          if (import.meta.env.MODE === 'production') {
+            console.log(err);
+          }
           return Swal.fire({
             position: "center",
             icon: "error",

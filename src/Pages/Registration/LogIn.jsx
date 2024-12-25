@@ -33,7 +33,6 @@ const LogIn = () => {
     })
     .catch(err=>{
       const errorMessage = err?.message?.split('(')[1].split(')')[0]
-      console.log(errorMessage)
       Swal.fire({
         position: "center",
         icon: "error",
@@ -48,7 +47,6 @@ const LogIn = () => {
     const googleHandler =()=>{
       signInWithGoogle()
       .then(res=>{
-        console.log(res)
         if(res.user){
           Swal.fire({
             position: "center",
@@ -61,9 +59,9 @@ const LogIn = () => {
         }
       })
       .catch(err=>{
-        console.log(err)
-        const errorMessage = err?.message?.split('(')[1].split(')')[0]
-        console.log(errorMessage)
+        if (import.meta.env.MODE === 'production') {
+          console.log(err)
+        }
       })
     }
 
@@ -80,7 +78,7 @@ const LogIn = () => {
           }
         />
       </div>
-      <div className="flex flex-col md:flex-row gap-5 my-6 p-4 border-2 border-black  bg-registerBg bg-no-repeat bg-cover bg-center">
+      <div className="flex flex-col md:flex-row gap-5 my-6 p-4   bg-registerBg bg-no-repeat bg-cover bg-center">
         {/* form-container */}
         <div 
         className="w-full md:w-1/2 p-4 rounded-xl border-2 shadow-xl">

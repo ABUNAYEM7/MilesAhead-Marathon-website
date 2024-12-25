@@ -6,11 +6,13 @@ import CardSkeleton from "../../components/Skeleton/LoadingSkeleton";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import { debounce } from "lodash";
+import UseAxiosSecure from "../../components/Hook/UseAxiosSecure";
 
 const MyApplyList = () => {
   const [marathon, setMarathon] = useState("");
   const [search, setSearch] = useState("");
   const queryClient = useQueryClient();
+  const axiosInstance = UseAxiosSecure()
 
   const { user } = useContext(AuthContext);
   const email = user?.email;
@@ -18,7 +20,7 @@ const MyApplyList = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["/my-applied/marathons", email, search],
     queryFn: async () => {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `${
           import.meta.env.VITE_API_URL
         }/my-applied/marathons/${email}?search=${search}`
@@ -165,11 +167,24 @@ const MyApplyList = () => {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (import.meta.env.MODE === 'production') {
+          console.log(err)
+        }
+      });
   };
 
+  // debounce-function
   const searchHandler = debounce((e) => setSearch(e.target.value), 1000);
-  console.log(data)
+
+  if(data.length === 0){
+    return (
+      <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
+      No Marathon Found
+    </h3>
+    )
+  }
+
   return (
     <div>
       <Helmet>

@@ -6,13 +6,13 @@ import Banner from '../components/Banner/Banner'
 
 const MainLayout = () => {
   return (
-    <div className='max-w-screen-2xl mx-auto border-2'>
+    <div className='max-w-screen-2xl mx-auto'>
       <header>
         <nav>
         <Navbar/>
         </nav>
       </header>
-      <main className='min-h-screen border-2 border-black'>
+      <main className='min-h-screen '>
         <Outlet/>
       </main>
       <footer>

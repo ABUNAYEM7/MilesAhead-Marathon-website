@@ -9,8 +9,10 @@ import { format } from "date-fns";
 import Swal from "sweetalert2";
 import "../../index.css";
 import { Helmet } from "react-helmet";
+import UseAxiosSecure, { axiosInstance } from "../../components/Hook/UseAxiosSecure";
 
 const MyMarathonList = () => {
+  const axiosInstance = UseAxiosSecure()
   const [err, setErr] = useState("");
   const [marathon, setMarathon] = useState(null);
   const [formData, setFormData] = useState({
@@ -32,9 +34,7 @@ const MyMarathonList = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["/my-marathons", email],
     queryFn: async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/my-marathons/${email}`,{withCredentials :true}
-      );
+      const res = await axiosInstance.get(`/my-marathons/${email}` );
       return res.data;
     },
   });
@@ -54,23 +54,23 @@ const MyMarathonList = () => {
     });
   }, [marathon]);
 
-  if (isLoading) {
-    return (
-      <div className="my-12 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="my-12 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  //       <CardSkeleton />
+  //       <CardSkeleton />
+  //       <CardSkeleton />
+  //     </div>
+  //   );
+  // }
 
-  if (isError) {
-    return (
-      <p className="my-12 text-center text-3xl font-bold text-red-500">
-        {error.message || "An unknown error occurred"}
-      </p>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <p className="my-12 text-center text-3xl font-bold text-red-500">
+  //       {error.message || "An unknown error occurred"}
+  //     </p>
+  //   );
+  // }
 
   // handle change
   const handleChange = (e) => {
@@ -163,7 +163,11 @@ const MyMarathonList = () => {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (import.meta.env.MODE === 'production') {
+          console.log(err)
+        }
+      });
   };
 
   // update-handler

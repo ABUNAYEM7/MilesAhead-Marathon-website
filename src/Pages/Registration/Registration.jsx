@@ -87,7 +87,6 @@ const Registration = () => {
     })
     .catch(err=>console.log(err))
   }
-  console.log(error)
   return (
     <div>
       <Helmet>
@@ -102,7 +101,7 @@ const Registration = () => {
           }
         />
       </div>
-      <div className="flex flex-col md:flex-row-reverse gap-5 my-6 p-4 border-2 border-black bg-registerBg bg-no-repeat bg-cover bg-center">
+      <div className="flex flex-col md:flex-row-reverse gap-5 my-6 p-4  bg-registerBg bg-no-repeat bg-cover bg-center">
         {/* form-container */}
         <div 
         className="w-full md:w-1/2 p-4 rounded-xl border-2 shadow-xl">

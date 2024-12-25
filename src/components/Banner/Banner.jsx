@@ -7,10 +7,17 @@ import { Pagination, Autoplay } from "swiper/modules";
 import image1 from "../../assets/banner1.jpg";
 import image2 from "../../assets/banner2.jpg";
 import image3 from "../../assets/banner3.webp";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner() {
+  const navigate = useNavigate()
+
+  const exploreHandler = ()=>{
+    navigate('/AllMarathons')
+  } 
+
   return (
-    <div className="h-[600px] border-2 rounded-xl">
+    <div className="h-[600px]  rounded-xl">
       <Swiper
         direction="vertical"
         pagination={{
@@ -41,7 +48,9 @@ export default function Banner() {
                   Push your boundaries, exceed your limits, and achieve your
                   goals!
                 </p>
-                <button className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                <button
+                onClick={exploreHandler}
+                className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
                   Explore Now
                 </button>
               </div>
@@ -64,7 +73,9 @@ export default function Banner() {
                   Participate in a transformative experience that celebrates
                   endurance, passion, and the spirit of community.
                 </p>
-                <button className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                <button 
+                onClick={exploreHandler}
+                className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
                   Explore Now
                 </button>
               </div>
@@ -87,7 +98,9 @@ export default function Banner() {
                   Conquer the challenges and experience the thrill of crossing
                   the finish line stronger than ever before.
                 </p>
-                <button className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                <button 
+                onClick={exploreHandler}
+                className="mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition">
                   Explore Now
                 </button>
               </div>

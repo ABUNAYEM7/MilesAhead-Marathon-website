@@ -20,7 +20,11 @@ const Navbar = () => {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (import.meta.env.MODE === 'production') {
+          console.log(err)
+        }
+      });
   };
 
   const links = (
