@@ -22,16 +22,16 @@ const MainRoutes = () => {
           {/* main-routes */}
           <Route path='/AllMarathons' element={<PrivateRoute><AllMarathons/></PrivateRoute>}></Route>
           {/* dashboard-nested-routes */}
-          <Route path='/Dashboard' element={}>
-            <Route index element={<AddMarathon/>}/>
-            <Route path='MyMarathonList' element={<MyMarathonList/>}/>
+          <Route path='/Dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}>
+            <Route index element={<PrivateRoute><AddMarathon/></PrivateRoute>}/>
+            <Route path='MyMarathonList' element={<PrivateRoute><MyMarathonList/></PrivateRoute>}/>
             <Route path='MyApplyList' element={<MyApplyList/>}/>
           </Route>
           <Route path='/Registration' element={<Registration/>}></Route>
           <Route path='/LogIn' element={<LogIn/>}></Route>
           {/* dynamic-routes */}
-          <Route path='/details/:id' element={<MarathonDetails/>} />
-          <Route path='/apply-marathon/:id' element={<ApplyMarathon/>}/>
+          <Route path='/details/:id' element={<PrivateRoute><MarathonDetails/></PrivateRoute>} />
+          <Route path='/apply-marathon/:id' element={<PrivateRoute><ApplyMarathon/></PrivateRoute>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>
     </Routes>

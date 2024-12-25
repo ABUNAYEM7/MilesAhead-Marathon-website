@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import logo from '../../assets/logo.webp'
 
 const Navbar = () => {
   const { user, userLogOut } = useContext(AuthContext);
@@ -89,7 +90,11 @@ const Navbar = () => {
       <div className="">
         <Link 
         to={'/'}
-        className="text-xl font-medium md:text-3xl md:font-bold text-pinkShade"><span className="text-highlight">Miles</span>Ahead</Link>
+       >
+        <img 
+        className="w-20 h-14 rounded-xl"
+        src={logo} alt="logo" />
+       </Link>
       </div>
       <div className="flex items-center gap-6">
         {/* links-container */}
