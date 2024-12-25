@@ -38,10 +38,10 @@ const AllMarathons = () => {
     );
   }
 
-  // const createAtHandler=()=>{
-  //   setRegisterDate('')
-  //   setCreateDate('des')
-  // }
+  const createAtHandler=()=>{
+    setRegisterDate('')
+    setCreateDate('des')
+  }
 
   const sortByRegisterDate =()=>{
     setCreateDate('')

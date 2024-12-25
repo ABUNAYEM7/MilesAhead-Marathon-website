@@ -19,9 +19,9 @@ export default function Banner() {
   return (
     <div className="h-[600px]  rounded-xl">
       <Swiper
-        direction="vertical"
         pagination={{
           clickable: true,
+          el: ".custom-pagination",
         }}
         autoplay={{
           delay: 2000, // Slide changes every 2 seconds
@@ -108,6 +108,7 @@ export default function Banner() {
           </div>
         </SwiperSlide>
       </Swiper>
+      <div className="custom-pagination"></div>
     </div>
   );
 }

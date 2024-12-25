@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Info from "../../components/Shared/Info";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Helmet } from "react-helmet";
 import Lottie from "lottie-react";
@@ -12,8 +12,11 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {userLogIn,signInWithGoogle} = useContext(AuthContext)
   const navigate = useNavigate()
+  const {state} = useLocation()
+  const location = state || '/'
 
 
+  // submitHandler
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -28,7 +31,7 @@ const LogIn = () => {
           showConfirmButton: false,
           timer: 1500
         });
-        navigate('/')
+        navigate(location)
       }
     })
     .catch(err=>{
@@ -55,7 +58,7 @@ const LogIn = () => {
             showConfirmButton: false,
             timer: 1500
           });
-          navigate('/')
+          navigate(location)
         }
       })
       .catch(err=>{
@@ -136,7 +139,10 @@ const LogIn = () => {
           <div >
             <h3 className="text-base font-semibold text-pinkShade text-center">Don't Have An Account ? 
 
-              <span className="text-black underline mx-2"><Link to={'/Registration'}>
+              <span className="text-black underline mx-2">
+                <Link
+                state={state} 
+                to={'/Registration'}>
               Register
               </Link>
               </span></h3>
