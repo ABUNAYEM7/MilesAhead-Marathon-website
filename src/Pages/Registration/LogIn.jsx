@@ -32,7 +32,6 @@ const LogIn = () => {
       }
     })
     .catch(err=>{
-      console.log(err)
       const errorMessage = err?.message?.split('(')[1].split(')')[0]
       console.log(errorMessage)
       Swal.fire({

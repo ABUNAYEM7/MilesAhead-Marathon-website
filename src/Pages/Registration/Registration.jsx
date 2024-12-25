@@ -74,7 +74,6 @@ const Registration = () => {
   const googleHandler =()=>{
     signInWithGoogle()
     .then(res=>{
-      console.log(res)
       if(res.user){
         Swal.fire({
           position: "center",

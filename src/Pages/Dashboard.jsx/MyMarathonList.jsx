@@ -33,7 +33,7 @@ const MyMarathonList = () => {
     queryKey: ["/my-marathons", email],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/my-marathons/${email}`
+        `${import.meta.env.VITE_API_URL}/my-marathons/${email}`,{withCredentials :true}
       );
       return res.data;
     },
@@ -72,11 +72,13 @@ const MyMarathonList = () => {
     );
   }
 
+  // handle change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // submitHandler
   const handleSubmit = (e, id) => {
     e.preventDefault();
     const marathonData = {
@@ -164,12 +166,14 @@ const MyMarathonList = () => {
       .catch((err) => console.log(err));
   };
 
+  // update-handler
   const updateHandler = (id) => {
     document.getElementById("updateModal").showModal();
     const updatedMarathon = data?.filter((item) => item._id === id);
     setMarathon(updatedMarathon[0]);
   };
 
+  // delete-handler
   const deleteHandler = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
