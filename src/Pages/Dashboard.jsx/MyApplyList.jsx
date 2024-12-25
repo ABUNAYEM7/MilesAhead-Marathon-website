@@ -177,13 +177,7 @@ const MyApplyList = () => {
   // debounce-function
   const searchHandler = debounce((e) => setSearch(e.target.value), 1000);
 
-  if(data.length === 0){
-    return (
-      <h3 className="text-3xl font-bold text-pinkShade my-12 text-center">
-      No Marathon Found
-    </h3>
-    )
-  }
+
 
   return (
     <div>

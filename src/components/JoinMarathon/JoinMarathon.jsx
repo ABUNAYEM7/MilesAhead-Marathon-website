@@ -1,8 +1,15 @@
 import { FaExpandArrowsAlt} from "react-icons/fa";
 import marathonLottie from "../../../public/marathonLottie.json"
 import Lottie from "lottie-react";
+import { useNavigate } from "react-router-dom";
 
 const JoinMarathon = () => {
+  const navigate = useNavigate()
+
+  const joinHandler =()=>{
+    navigate('/AllMarathons')
+  }
+
   return (
     <div className="my-6 p-4 flex flex-col  lg:flex-row gap-5">
       {/* left-container */}
@@ -29,6 +36,7 @@ const JoinMarathon = () => {
           Join any of our monthly virtual challenges and become part of a vibrant global community of runners. Whether you’re preparing for your next marathon or simply aiming to stay active, our challenges provide the perfect opportunity to connect with like-minded individuals, track your progress, and achieve your fitness goals. Embrace the camaraderie, share your journey, and get inspired by runners from all over the world as you work toward your personal best.
           </p>
           <button 
+          onClick={joinHandler}
           className="py-4 px-10 border-2 border-highlight text-xl font-medium">Join The Club</button>
         </div>
       </div>
