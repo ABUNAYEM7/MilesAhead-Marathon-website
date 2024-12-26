@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser);
           }
         } else {
-          await axios.get(`${import.meta.env.VITE_API_URL}/clearCookie`, {
+          await axios.post(`${import.meta.env.VITE_API_URL}/clearCookie`,{}, {
             withCredentials: true,
           });
           setUser(null);
