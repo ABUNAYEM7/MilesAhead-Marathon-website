@@ -83,24 +83,26 @@ const AllMarathons = () => {
     setCardPerPage(perPageCard)
   }
 
+  // next button handler
   const nextHandler =()=>{
     if(selected < totalPage){
       setSelected(selected + 1)
     }
   }
+
+    // previous button handler
   const prevHandler =()=>{
     if(selected > 1){
       setSelected(selected - 1)
     }
   }
 
-console.log(selected)
-
   return (
     <div>
       <Helmet>
         <title>MilesAhead||All Marathons</title>
       </Helmet>
+
       {/* info-container */}
       <div>
         <Info
@@ -110,6 +112,7 @@ console.log(selected)
           }
         />
       </div>
+
       {/* sorting-container */}
       <div className="my-6 p-4 space-y-3">
         <h3 className="text-2xl md:text-3xl font-bold text-highlight text-center ">
@@ -148,22 +151,24 @@ console.log(selected)
           </button>
         </div>
       </div>
+
       {/* marathon-container */}
       <div className="my-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center">
         {data?.map((marathon) => (
           <Card key={marathon._id} marathon={marathon} />
         ))}
       </div>
-      <div className="my-6 p-4 flex items-center gap-2 flex-wrap">
+      {/* pagination-container */}
+      <div className="my-6 p-4 flex items-center justify-center gap-2 flex-wrap">
        {/* previous-button */}
         <button 
         onClick={prevHandler}
-        className="btn">Prev</button>
+        className="btn border-pinkShade text-pinkShade hover:text-pinkShade">Prev</button>
 
         {countArray?.map((num, indx) => (
           <button
             onClick={()=>setSelected(num + 1)}
-            className={`${selected === num +1 ? 'btn bg-highlight hover:text-highlight':'btn bg-pinkShade text-white hover:text-pinkShade'}`}
+            className={`${selected === num +1 ? 'btn bg-highlight  text-white hover:text-highlight':'btn border-highlight text-highlight hover:text-pinkShade'}`}
             key={indx}
           >
             {num + 1 }
@@ -172,7 +177,7 @@ console.log(selected)
         {/* next-button */}
         <button 
         onClick={nextHandler}
-        className="btn">Next</button>
+        className="btn border-pinkShade text-pinkShade hover:text-pinkShade">Next</button>
         {/* select */}
         <select 
         value={cardPerPage}
