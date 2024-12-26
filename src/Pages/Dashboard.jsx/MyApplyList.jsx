@@ -90,9 +90,9 @@ const MyApplyList = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          axios
+          axiosInstance
             .delete(
-              `${import.meta.env.VITE_API_URL}/delete/my-registration/${id}`
+              `/delete/my-registration/${id}`
             )
             .then((res) => {
               {
@@ -139,9 +139,9 @@ const MyApplyList = () => {
     const data = Object.fromEntries(form.entries());
 
     // sending patch request to backend
-    axios
+    axiosInstance
       .patch(
-        `${import.meta.env.VITE_API_URL}/update-apply/marathon/${id}`,
+        `/update-apply/marathon/${id}`,
         data
       )
       .then((res) => {

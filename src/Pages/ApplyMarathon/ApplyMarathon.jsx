@@ -10,15 +10,19 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import Lottie from "lottie-react";
 import marathonLottie from "../../../public/marathonLottie.json";
+import UseAxiosSecure from "../../components/Hook/UseAxiosSecure";
 
 const ApplyMarathon = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const axiosInstance = UseAxiosSecure()
+
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["/marathons/details/", id],
     queryFn: async () => {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `${import.meta.env.VITE_API_URL}/marathons/details/${id}`
       );
       return res.data;
@@ -56,8 +60,8 @@ const ApplyMarathon = () => {
     form.append("jobId", jobId);
     const registerData = Object.fromEntries(form.entries());
     registerData.marathonStart = format(new Date(marathonStart), "P");
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/apply-marathons`, registerData)
+    axiosInstance
+      .post(`/apply-marathons`, registerData)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({

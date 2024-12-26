@@ -135,9 +135,9 @@ const MyMarathonList = () => {
       return setErr("Marathon start date cannot be before the created date.");
     }
     setErr("");
-    axios
+    axiosInstance
       .patch(
-        `${import.meta.env.VITE_API_URL}/update-marathon/${id}`,
+        `/update-marathon/${id}`,
         marathonData
       )
       .then((res) => {
@@ -198,8 +198,8 @@ const MyMarathonList = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          axios
-            .delete(`${import.meta.env.VITE_API_URL}/delete/my-marathon/${id}`)
+          axiosInstance
+            .delete(`/delete/my-marathon/${id}`)
             .then((res) => {
               {
                 if (res.data.deletedCount > 0) {

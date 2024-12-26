@@ -7,6 +7,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import UseAxiosSecure from "../../components/Hook/UseAxiosSecure";
 
 const AddMarathon = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,9 @@ const AddMarathon = () => {
     image: "",
     createAt: format(new Date(), "P"),
   });
+  const axiosInstance = UseAxiosSecure()
+
+
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
@@ -108,8 +112,8 @@ const AddMarathon = () => {
       });
     }
     // post data in backend
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/add-marathon`, marathonData)
+    axiosInstance
+      .post(`/add-marathon`, marathonData)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({
