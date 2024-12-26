@@ -5,13 +5,14 @@ import Info from "../../components/Shared/Info";
 import Card from "../../components/card";
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+
 
 const AllMarathons = () => {
   const [createDate, setCreateDate] = useState("");
   const [registerDate, setRegisterDate] = useState("");
   const [count, setCount] = useState(0);
   const [cardPerPage,setCardPerPage] = useState(6)
+  const [selected,setSelected] = useState(1)
 
   // calculation for page number
   const totalPage = Math.ceil(count / cardPerPage);
@@ -19,13 +20,13 @@ const AllMarathons = () => {
 
   // data-fetching
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["/marathons", createDate, registerDate],
+    queryKey: ["/marathons", createDate, registerDate,selected,cardPerPage],
 
     queryFn: async () => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/marathons?allMarathons=true&createDate=${createDate}&registerDate=${registerDate}`
+        }/marathons?allMarathons=true&createDate=${createDate}&registerDate=${registerDate}&page=${selected -1}&size=${cardPerPage}`
       );
       return res.data;
     },
@@ -35,6 +36,7 @@ const AllMarathons = () => {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/pagination`)
+
       .then((res) => setCount(res.data?.result));
   }, []);
 
@@ -74,10 +76,25 @@ const AllMarathons = () => {
     setRegisterDate("");
   };
 
+  // select per page handler
   const selectHandler=(e)=>{
+    setSelected(1)
     const perPageCard = parseInt(e.target.value)
     setCardPerPage(perPageCard)
   }
+
+  const nextHandler =()=>{
+    if(selected < totalPage){
+      setSelected(selected + 1)
+    }
+  }
+  const prevHandler =()=>{
+    if(selected > 1){
+      setSelected(selected - 1)
+    }
+  }
+
+console.log(selected)
 
   return (
     <div>
@@ -138,16 +155,24 @@ const AllMarathons = () => {
         ))}
       </div>
       <div className="my-6 p-4 flex items-center gap-2 flex-wrap">
-        <button className="btn">Prev</button>
+       {/* previous-button */}
+        <button 
+        onClick={prevHandler}
+        className="btn">Prev</button>
+
         {countArray?.map((num, indx) => (
           <button
-            className="btn bg-pinkShade text-white hover:text-pinkShade"
+            onClick={()=>setSelected(num + 1)}
+            className={`${selected === num +1 ? 'btn bg-highlight hover:text-highlight':'btn bg-pinkShade text-white hover:text-pinkShade'}`}
             key={indx}
           >
             {num + 1 }
           </button>
         ))}
-        <button className="btn">Next</button>
+        {/* next-button */}
+        <button 
+        onClick={nextHandler}
+        className="btn">Next</button>
         {/* select */}
         <select 
         value={cardPerPage}

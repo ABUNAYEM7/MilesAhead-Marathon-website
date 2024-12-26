@@ -8,8 +8,3 @@
 #updateModal{
     z-index: 99998;
 }
-
-.active{
-    background-color: #0091bd;
-    color: white;
-}
