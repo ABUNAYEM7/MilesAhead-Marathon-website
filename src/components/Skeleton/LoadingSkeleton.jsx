@@ -2,9 +2,9 @@ import React from "react";
 
 const CardSkeleton = () => {
   return (
-    <div className="my-6 relative md:max-w-[400px] w-[340px] mx-auto shadow-lg rounded-lg overflow-hidden animate-pulse">
+    <div className="my-6 relative md:max-w-[300px] w-[340px] mx-auto shadow-lg rounded-lg overflow-hidden animate-pulse">
       {/* Image Placeholder */}
-      <div className="w-full h-48 bg-gray-300"></div>
+      {/* <div className="w-full h-48 bg-gray-300"></div> */}
 
       {/* Card Content Placeholder */}
       <div className="p-4 bg-base-100">
