@@ -91,3 +91,95 @@ As a marathon organizer, **MilesAhead** gives you all the tools needed to easily
 With **MilesAhead**, managing marathons becomes effortless. The intuitive interface and smooth workflows will save you time, so you can focus on organizing a successful race.
 
 To make this section even more attractive, here's a simple Lottie animation that depicts the ease of managing marathons:
+
+## How to Run Locally
+
+Follow these steps to set up and run the project on your local machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone "https://github.com/your-repository-url.git"
+   ```
+
+2. **Navigate to the project folder:**
+   ```bash
+   cd milesahead
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **Set up your Firebase and API credentials:**
+
+   Create a `.env` file in the root directory of the project and add the following environment variables:
+   
+   - `VITE_apiKey=AIzaSyCl_Lsr_vbXpNYmW8uV4Vx9OA4xdC9wFiM`
+   - `VITE_authDomain=milesahead-34c38.firebaseapp.com`
+   - `VITE_projectId=milesahead-34c38`
+   - `VITE_storageBucket=milesahead-34c38.firebasestorage.app`
+   - `VITE_messagingSenderId=858466692384`
+   - `VITE_appId=1:858466692384:web:1cab26ce1631b6af55fb45`
+   - `VITE_API_URL=https://server-kohl-mu.vercel.app`
+
+5. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open the browser** and go to:
+   ```
+   http://localhost:3000
+   ```
+
+## Dependencies
+
+```json
+{
+  "name": "milesahead",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.8",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
+    "firebase": "^11.1.0",
+    "lodash": "^4.17.21",
+    "lottie-react": "^2.4.0",
+    "react": "^18.3.1",
+    "react-countdown-circle-timer": "^3.2.1",
+    "react-datepicker": "^7.5.0",
+    "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^5.4.0",
+    "react-loading-skeleton": "^3.5.0",
+    "react-router-dom": "^7.1.0",
+    "sweetalert2": "^11.15.3",
+    "swiper": "^11.1.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.22",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.13.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.3"
+  }
+}
+```
