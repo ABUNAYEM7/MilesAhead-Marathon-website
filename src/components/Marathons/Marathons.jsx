@@ -46,12 +46,12 @@ const Marathons = () => {
         {data?.map((marathon) => (
           <div 
           key={marathon._id }
-          className="card bg-base-100 max-w-[400px] max-h-[300px] image-full shadow-xl">
+          className="card bg-base-100 max-w-[400px] min-h-[300px] image-full shadow-xl">
             <figure>
               <img
               className="w-full object-cover object-center"
                 src={marathon.image}
-                alt="image"
+              alt="image"
               />
             </figure>
             <div className="card-body ">

@@ -153,7 +153,7 @@ const AllMarathons = () => {
       </div>
 
       {/* marathon-container */}
-      <div className="my-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center">
+      <div className="my-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-items-center">
         {data?.map((marathon) => (
           <Card key={marathon._id} marathon={marathon} />
         ))}

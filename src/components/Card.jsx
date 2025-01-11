@@ -5,7 +5,7 @@ const Card = ({ marathon }) => {
   const { title, location, distance, description, image,createAt } = marathon;
 
   return (
-    <div className="my-6 relative md:max-w-[400px] w-[340px]  mx-auto shadow-lg rounded-lg overflow-hidden group">
+    <div className="my-6 relative md:max-w-[400px]   mx-auto shadow-lg rounded-lg overflow-hidden group">
       {/* Image */}
       <figure>
         <img

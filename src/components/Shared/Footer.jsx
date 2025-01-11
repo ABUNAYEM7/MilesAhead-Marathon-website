@@ -26,7 +26,7 @@ const Footer = () => {
     const UserSubscription = {email}
     try{
       setDisabled(false)
-      const res = await axios.post(`${import.meta.VITE_API_URL}/user-submission`,UserSubscription)
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/user-subscription`,UserSubscription)
     if(res?.data?.insertedId){
       Swal.fire({
         position: "center",
@@ -40,6 +40,7 @@ const Footer = () => {
     }
     }
     catch(err){
+      // console.log(err)
       if(err?.status === 422){
         Swal.fire({
           position: "center",

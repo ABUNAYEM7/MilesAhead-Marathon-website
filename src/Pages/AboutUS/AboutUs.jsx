@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   return (
@@ -44,9 +45,11 @@ const AboutUs = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <button className="btn bg-highlight text-white hover:text-pinkShade text-lg font-semibold">
+            <Link 
+            to={'/AllMarathons'}
+            className="btn bg-highlight text-white hover:text-pinkShade text-lg font-semibold">
               Join the Race
-            </button>
+            </Link>
           </div>
         </div>
       </div>

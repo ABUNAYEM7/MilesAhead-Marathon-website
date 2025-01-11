@@ -100,7 +100,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="fixed top-0 z-50 bg-gradient-to-r from-highlight to-pinkShade text-white navbar flex-col sm:flex-row justify-between gap-3 bg-base-100">
+    <div className="fixed top-0 max-w-screen-2xl mx-auto z-50 bg-gradient-to-r from-highlight to-pinkShade text-white navbar flex-col sm:flex-row justify-between gap-3 bg-base-100">
       <div className="">
         <Link 
         to={'/'}

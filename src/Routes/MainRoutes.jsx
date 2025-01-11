@@ -22,7 +22,7 @@ const MainRoutes = () => {
         <Route path ='/' element ={<MainLayout/>}>
           <Route index element={<Home/>}></Route>
           {/* main-routes */}
-          <Route path='/AllMarathons' element={<PrivateRoute><AllMarathons/></PrivateRoute>}></Route>
+          <Route path='/AllMarathons' element={<AllMarathons/>}></Route>
           {/* dashboard-nested-routes */}
           <Route path='/Dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}>
             <Route index element={<PrivateRoute><AddMarathon/></PrivateRoute>}/>
@@ -33,7 +33,7 @@ const MainRoutes = () => {
           <Route path='/Registration' element={<Registration/>}></Route>
           <Route path='/LogIn' element={<LogIn/>}></Route>
           {/* dynamic-routes */}
-          <Route path='/details/:id' element={<PrivateRoute><MarathonDetails/></PrivateRoute>} />
+          <Route path='/details/:id' element={<MarathonDetails/>} />
           <Route path='/apply-marathon/:id' element={<PrivateRoute><ApplyMarathon/></PrivateRoute>}/>
           {/* donation-route */}
           <Route path='/user-donation' element={<PrivateRoute><UserDonation/></PrivateRoute>}/>
