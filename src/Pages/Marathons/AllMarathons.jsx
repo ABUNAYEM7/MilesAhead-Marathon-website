@@ -98,7 +98,7 @@ const AllMarathons = () => {
   }
 
   return (
-    <div>
+    <div className="mt-32 sm:mt-0">
       <Helmet>
         <title>MilesAhead||All Marathons</title>
       </Helmet>

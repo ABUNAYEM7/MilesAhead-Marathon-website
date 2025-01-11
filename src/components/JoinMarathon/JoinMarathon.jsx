@@ -11,7 +11,7 @@ const JoinMarathon = () => {
   }
 
   return (
-    <div className="my-6 p-4 flex flex-col  lg:flex-row gap-5">
+    <div className="my-6 p-4 flex flex-col  lg:flex-row gap-8">
       {/* left-container */}
       <div className="p-4 w-full lg:w-1/2 bg-black rounded-xl">
         <Lottie
@@ -21,14 +21,14 @@ const JoinMarathon = () => {
         />
       </div>
       {/* right-container */}
-      <div className="p-4 w-full lg:w-1/2">
+      <div className="w-full lg:w-1/2">
         <h3 className="text-xl sm:text-3xl font-semibold flex items-center gap-2">
           <FaExpandArrowsAlt className="text-highlight" size={40} />
           Join 
           <span className="text-pinkShade">MilesAhead</span>
           Club
         </h3>
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 space-y-5">
           <h3 className="text-5xl font-black from-black">Connect</h3>
           <h3 className="text-5xl font-black from-black ">Compete</h3>
           <h3 className="text-5xl font-black from-black">Celebrate</h3>
@@ -37,7 +37,7 @@ const JoinMarathon = () => {
           </p>
           <button 
           onClick={joinHandler}
-          className="py-4 px-10 border-2 border-highlight text-xl font-medium">Join The Club</button>
+          className="mt-6 py-4 px-10 border-2 border-highlight text-xl font-medium">Join The Club</button>
         </div>
       </div>
     </div>

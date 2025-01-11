@@ -13,6 +13,8 @@ import MyApplyList from '../Pages/Dashboard.jsx/MyApplyList';
 import ApplyMarathon from '../Pages/ApplyMarathon/ApplyMarathon';
 import NotFound from '../Pages/ErrorPage/NotFound';
 import PrivateRoute from '../Pages/PrivateRoute/PrivateRoute';
+import AboutUs from '../Pages/AboutUS/AboutUs';
+import UserDonation from '../Pages/UserDonation/UserDonation';
 
 const MainRoutes = () => {
   return (
@@ -27,11 +29,14 @@ const MainRoutes = () => {
             <Route path='MyMarathonList' element={<PrivateRoute><MyMarathonList/></PrivateRoute>}/>
             <Route path='MyApplyList' element={<MyApplyList/>}/>
           </Route>
+          <Route path='/about-us' element={<AboutUs/>} />
           <Route path='/Registration' element={<Registration/>}></Route>
           <Route path='/LogIn' element={<LogIn/>}></Route>
           {/* dynamic-routes */}
           <Route path='/details/:id' element={<PrivateRoute><MarathonDetails/></PrivateRoute>} />
           <Route path='/apply-marathon/:id' element={<PrivateRoute><ApplyMarathon/></PrivateRoute>}/>
+          {/* donation-route */}
+          <Route path='/user-donation' element={<PrivateRoute><UserDonation/></PrivateRoute>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>
     </Routes>

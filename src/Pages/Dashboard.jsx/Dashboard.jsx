@@ -4,7 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 
 const Dashboard = () => {
   return (
-    <div className='flex flex-col md:flex-row gap-5 p-4'>
+    <div className='flex flex-col md:flex-row gap-5 p-4 mt-32 sm:mt-24'>
         <Helmet>
         <title>MilesAhead||Dashboard</title>
       </Helmet>

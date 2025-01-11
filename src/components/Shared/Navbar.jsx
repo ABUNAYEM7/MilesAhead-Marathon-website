@@ -33,8 +33,8 @@ const Navbar = () => {
         to={""}
         className={({ isActive }) =>
           `${
-            isActive ? "text-highlight underline underline-offset-8" : ""
-          } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+            isActive ? "text-secondary underline underline-offset-8" : ""
+          } text-xs md:text-xl font-medium hover:text-secondary duration-100`
         }
       >
         Home
@@ -43,11 +43,21 @@ const Navbar = () => {
         to={"/AllMarathons"}
         className={({ isActive }) =>
           `${
-            isActive ? "text-highlight underline underline-offset-8" : ""
-          } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+            isActive ? "text-secondary underline underline-offset-8" : ""
+          } text-xs md:text-xl font-medium hover:text-secondary duration-100`
         }
       >
         Marathons
+      </NavLink>
+      <NavLink
+        to={"/about-us"}
+        className={({ isActive }) =>
+          `${
+            isActive ? "text-secondary underline underline-offset-8" : ""
+          } text-xs md:text-xl font-medium hover:text-secondary duration-100`
+        }
+      >
+        About Us
       </NavLink>
       {
         user?.email &&
@@ -55,8 +65,8 @@ const Navbar = () => {
         to={"/Dashboard"}
         className={({ isActive }) =>
           `${
-            isActive ? "text-highlight underline underline-offset-8" : ""
-          } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+            isActive ? "text-secondary underline underline-offset-8" : ""
+          } text-xs md:text-xl font-medium hover:text-secondary duration-100`
         }
       >
         Dashboard
@@ -68,8 +78,8 @@ const Navbar = () => {
             to={"/LogIn"}
             className={({ isActive }) =>
               `${
-                isActive ? "text-highlight underline underline-offset-8" : ""
-              } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+                isActive ? "text-secondary underline underline-offset-8" : ""
+              } text-xs md:text-xl font-medium hover:text-secondary duration-100`
             }
           >
             Login
@@ -78,8 +88,8 @@ const Navbar = () => {
             to={"/Registration"}
             className={({ isActive }) =>
               `${
-                isActive ? "text-highlight underline underline-offset-8" : ""
-              } text-base md:text-xl font-medium hover:text-pinkShade duration-100`
+                isActive ? "text-secondary underline underline-offset-8" : ""
+              } text-xs md:text-xl font-medium hover:text-secondary duration-100`
             }
           >
             Register
@@ -90,7 +100,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar flex-col sm:flex-row justify-between gap-3 bg-base-100">
+    <div className="fixed top-0 z-50 bg-gradient-to-r from-highlight to-pinkShade text-white navbar flex-col sm:flex-row justify-between gap-3 bg-base-100">
       <div className="">
         <Link 
         to={'/'}
@@ -126,7 +136,7 @@ const Navbar = () => {
               <li>
                 <button
                   onClick={logoutHandler}
-                  className="btn text-highlight border border-pinkShade"
+                  className="btn text-secondary border border-pinkShade"
                 >
                   Logout
                 </button>

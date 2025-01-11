@@ -5,6 +5,7 @@ import UpComingMarathons from '../../components/Marathons/UpComingMarathons'
 import {Helmet} from "react-helmet";
 import ManageYourEvent from '../../components/RiseEvent/ManageYourEvent';
 import JoinMarathon from '../../components/JoinMarathon/JoinMarathon';
+import Faq from '../../components/FAQ/Faq';
 
 const Home = () => {
   return (
@@ -26,6 +27,9 @@ const Home = () => {
       </section>
       <section>
         <JoinMarathon/>
+      </section>
+      <section>
+        <Faq/>
       </section>
     </div>
   )

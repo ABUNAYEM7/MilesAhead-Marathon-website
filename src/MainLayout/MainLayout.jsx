@@ -7,7 +7,7 @@ import Banner from '../components/Banner/Banner'
 const MainLayout = () => {
   return (
     <div className='max-w-screen-2xl mx-auto'>
-      <header>
+      <header className='mt-24 sm:mt-16'>
         <nav>
         <Navbar/>
         </nav>
