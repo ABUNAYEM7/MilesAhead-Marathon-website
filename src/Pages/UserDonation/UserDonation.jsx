@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../components/CheckOutForm/CheckoutForm";
+import Lottie from "lottie-react";
+import donationAnimation from "../../../public/donationAnimation.json"
+
 
 // todo-need to place pk
 const stripePromise = loadStripe(`${import.meta.env.VITE_PUBLIC_KEY}`);
@@ -27,7 +29,12 @@ const UserDonation = () => {
         </div>
       </div>
       {/* left-container */}
-      <div className="w-full md:w-1/2 p-4">payment process</div>
+      <div className="w-full md:w-1/2 p-4 flex items-center justify-center">
+      <Lottie
+          animationData={donationAnimation}
+          loop={true}
+        />
+      </div>
     </section>
   );
 };
