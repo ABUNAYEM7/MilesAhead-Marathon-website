@@ -71,7 +71,7 @@ const ApplyMarathon = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate("/Dashboard/MyApplyList");
+          navigate("/Dashboard/user-donation");
         }
       })
       .catch((err) => {
@@ -116,7 +116,7 @@ const ApplyMarathon = () => {
         />
       </div>
       {/* main-container */}
-      <div className="my-6 p-4  flex flex-col-reverse md:flex-row gap-5 ">
+      <div className="m-6 p-4  flex flex-col-reverse md:flex-row gap-5 ">
         <div className="w-full md:1/2 p-4 rounded-xl shadow-2xl bg-registerBg bg-no-repeat bg-cover bg-center">
           <h3 className="text-xl md:text-3xl md:font-bold my-3 text-center text-highlight">
             Joint The Race And Cross The Finish Line{" "}

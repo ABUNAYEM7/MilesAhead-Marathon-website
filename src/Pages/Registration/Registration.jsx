@@ -88,7 +88,11 @@ const Registration = () => {
         navigate(location)
       }
     })
-    .catch(err=>console.log(err))
+    .catch(err=>{
+      if (process.env.NODE_ENV === 'development') {
+        console.log(err)
+      }
+    })
   }
   return (
     <div>

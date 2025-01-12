@@ -36,7 +36,7 @@ const MainRoutes = () => {
           <Route path='/details/:id' element={<MarathonDetails/>} />
           <Route path='/apply-marathon/:id' element={<PrivateRoute><ApplyMarathon/></PrivateRoute>}/>
           {/* donation-route */}
-          <Route path='/user-donation' element={<PrivateRoute><UserDonation/></PrivateRoute>}/>
+          <Route path='/Dashboard/user-donation' element={<PrivateRoute><UserDonation/></PrivateRoute>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>
     </Routes>

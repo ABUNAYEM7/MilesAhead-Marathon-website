@@ -61,7 +61,7 @@ const MarathonDetails = () => {
   const expired = deadline && currentDate > deadline;
   
   return (
-    <div className="container mx-auto my-12 px-4">
+    <div className="container mx-auto mt-36 mb-3 sm:mt-20  px-4">
       <Helmet>
         <title>MilesAhead||Marathon Details</title>
       </Helmet>
@@ -69,7 +69,7 @@ const MarathonDetails = () => {
         <img
           src={image}
           alt={title}
-          className="w-full max-h-[550px] object-cover object-center"
+          className="w-full max-h-[550px]  object-center object-fill"
         />
 
         <div className="p-6">

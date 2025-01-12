@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import UseAxiosSecure, { axiosInstance } from "../Hook/UseAxiosSecure";
 import debounce from "lodash/debounce";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const [donationAmount, setDonationAmount] = useState('');
@@ -13,6 +15,7 @@ const CheckoutForm = () => {
 
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate()
 
 //   useEffect for fetching clientSecret
     useEffect(()=>{
@@ -28,7 +31,9 @@ const CheckoutForm = () => {
             }
         })
         .catch(err=>{
-            // console.log(err)
+            if (process.env.NODE_ENV === 'development') {
+              console.log(err);
+            }
         })
     },[axiosInstance,donationAmount])
 
@@ -62,22 +67,26 @@ const CheckoutForm = () => {
         card,
     })
     if(error){
+      if (process.env.NODE_ENV === 'development') {
         console.log('paymentMethod error -->',error)
+      }
         setErr(error.message)
     }else{
         setErr('')
-        console.log('payment method-->', paymentMethod)
+        if (process.env.NODE_ENV === 'development') {
+          console.log('payment method-->', paymentMethod)
+        }
     }
 
-    // // retrieve data from form
-    // const form = e.target
-    // const email = form.email.value;
-    // const amount = donationAmount
+    // retrieve data from form
+    const form = e.target
+    const email = form.email.value;
+    const amount = donationAmount
     
 
-    const {error:confirmPaymentErr,paymentIntent} = await stripe.confirmCardPayment(clientSecret,{
-        paymentMethod:{
-            card :"card",
+    const {paymentIntent, error:confirmPaymentErr} = await stripe.confirmCardPayment(clientSecret,{
+        payment_method:{
+            card :card,
             billing_details:
             {
                 email :user?.email,
@@ -85,10 +94,22 @@ const CheckoutForm = () => {
         }
     })
     if(confirmPaymentErr){
-        console.log('confirmpay.. err-->', confirmPaymentErr)
-    }else{
-        console.log('paymentIntent-->',paymentIntent)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('confirmPay.. err-->', confirmPaymentErr.message || confirmPaymentErr) 
+       }
     }
+    if(paymentIntent.status === 'succeeded'){
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Thanks For Your Contribution",
+        text :`Transaction Id : ${paymentIntent.id}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+      navigate('/Dashboard/MyApplyList')
+    }
+
   };
 
 
